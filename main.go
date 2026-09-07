@@ -21,6 +21,29 @@ func billingCost(plan string) float64 {
 	}
 }
 
+func double(a int) int {
+	return a + a
+}
+
+func conversions(converter func(int) int, x, y, z int) (int, int, int) {
+	convertedX := converter(x)
+	convertedY := converter(y)
+	convertedZ := converter(z)
+	return convertedX, convertedY, convertedZ
+}
+
+func printReports(intro, body, outro string) {
+	printCostReport(func(a string) int { return len(a) * 2 }, intro)
+	printCostReport(func(a string) int { return len(a) * 3 }, body)
+	printCostReport(func(a string) int { return len(a) * 4 }, outro)
+}
+
+func printCostReport(costCalculator func(string) int, message string) {
+	cost := costCalculator(message)
+	fmt.Printf(`Message: "%s" Cost: %v cents`, message, cost)
+	fmt.Println()
+}
+
 func main() {
 	// Chapter 2 - Constants and Formatting
 	var username string
@@ -163,4 +186,37 @@ outer:
 	fmt.Println(functions.GetMonthlyPrice("enterprise"))
 	fmt.Println(functions.GetMonthlyPrice("unknown"))
 
+	cost_per_message := 2
+	messagesThisMonth := 50
+	messagesLastMonth := 40
+
+	fmt.Println(functions.MonthlyBillIncrease(cost_per_message, messagesLastMonth, messagesThisMonth))
+
+	tier_basic := "basic"
+	tier_premium := "premium"
+	tier_enterprise := "enterprise"
+	tier_unknown := "unknown"
+
+	fmt.Println(functions.GetProductMessage(tier_basic))
+	fmt.Println(functions.GetProductMessage(tier_premium))
+	fmt.Println(functions.GetProductMessage(tier_enterprise))
+	fmt.Println(functions.GetProductMessage(tier_unknown))
+
+	fmt.Println(functions.YearsUntilEvents(15))
+
+	//fmt.Println(functions.Reformat("Hello There", ))
+
+	newX, newY, newZ := conversions(double, 1, 2, 3)
+	fmt.Println(newX, newY, newZ)
+
+	newX, newY, newZ = conversions(func(a int) int {
+		return a + a
+	}, 5, 10, 15)
+	fmt.Println(newX, newY, newZ)
+
+	printReports(
+		"Welcome to the Hotel California",
+		"Such a lovely place",
+		"Plenty of room at the Hotel California",
+	)
 }
