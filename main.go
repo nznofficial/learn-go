@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"learngo/calc"
+	"learngo/functions"
+	"runtime"
 	"unicode/utf8"
 )
 
@@ -60,6 +62,8 @@ func main() {
 
 	fmt.Println(calc.Add(3, 8))
 
+	fmt.Println(functions.Concat("Elijah", "Vazquez"))
+
 	// Chapter 3 - Conditionals
 
 	messageLen := 10
@@ -104,6 +108,59 @@ func main() {
 
 	fmt.Println("Account balance:", accountBalance)
 
+	// Switch statements
+	switch os := runtime.GOOS; os {
+	case "darwin":
+		fmt.Println("OS X.")
+	default:
+		fmt.Println(os)
+	}
+
+	go_x := 1
+	switch {
+	case go_x == 1:
+		fmt.Println("Go 1.1")
+		fallthrough
+	case go_x == 2:
+		fmt.Println("Go 1.2")
+	}
+
+	go_x_2 := 10
+	if go_x_2 := 5; go_x_2 > 3 {
+		fmt.Println(go_x_2)
+	}
+	fmt.Println(go_x_2)
+
+	for i := 0; i < 3; i++ {
+		switch {
+		case i == 1:
+			break
+		}
+		fmt.Println(i)
+	}
+
+	for i := 0; i < 3; i++ {
+		switch {
+		case i == 1:
+			continue
+		}
+		fmt.Println(i)
+	}
+
+outer:
+	for i := 0; i < 3; i++ {
+		switch {
+		case i == 1:
+			break outer
+		}
+		fmt.Println(i)
+	}
+
 	// Chapter 4 - Functions
+
+	fmt.Println(functions.GetMonthlyPrice("basic"))
+	fmt.Println(functions.GetMonthlyPrice("premium"))
+	fmt.Println(functions.GetMonthlyPrice("enterprise"))
+	fmt.Println(functions.GetMonthlyPrice("unknown"))
 
 }
