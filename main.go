@@ -44,6 +44,34 @@ func printCostReport(costCalculator func(string) int, message string) {
 	fmt.Println()
 }
 
+func (u User) SendMessage(message string, messageLength int) (string, bool) {
+	if messageLength <= u.MessageCharLimit {
+		return message, true
+	}
+	return "", false
+}
+
+type User struct {
+	Name string
+	Membership
+}
+
+type Membership struct {
+	Type             string
+	MessageCharLimit int
+}
+
+func newUser(name string, membershipType string) User {
+	membership := Membership{Type: membershipType}
+	if membershipType == "premium" {
+		membership.MessageCharLimit = 1000
+	} else {
+		membership.Type = "standard"
+		membership.MessageCharLimit = 100
+	}
+	return User{Name: name, Membership: membership}
+}
+
 func main() {
 	// Chapter 2 - Constants and Formatting
 	var username string
@@ -219,4 +247,13 @@ outer:
 		"Such a lovely place",
 		"Plenty of room at the Hotel California",
 	)
+
+	// Chapter 5 - Structs
+	newUser1 := newUser("Elijah", "premium")
+	newUser2 := newUser("Ezra", "basic")
+
+	fmt.Println(newUser1, newUser2)
+
+	fmt.Println(newUser1.SendMessage("Hot Wheels", len("Hot Wheels")))
+	fmt.Println(newUser2.SendMessage("Dinosaurs", len("Dinosaurs")))
 }
