@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"learngo/calc"
 	"learngo/functions"
@@ -121,6 +122,17 @@ func processNotification(n notification) (string, int) {
 	default:
 		return "", 0
 	}
+}
+
+func validateStatus(status string) error {
+	// ?
+	if status == "" {
+		return errors.New("status cannot be empty")
+	}
+	if len(status) > 140 {
+		return errors.New("status exceeds 140 characters")
+	}
+	return nil
 }
 
 func main() {
@@ -309,5 +321,7 @@ outer:
 	fmt.Println(newUser2.SendMessage("Dinosaurs", len("Dinosaurs")))
 
 	// Chapter 6 - Interfaces
+
+	// Chapter 7 - Errors
 
 }
